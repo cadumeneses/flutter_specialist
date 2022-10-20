@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '/repositories/linguagens_repository.dart';
 import '/repositories/nivel_repository.dart';
 import '/shared/widgets/text_label.dart';
@@ -18,10 +19,22 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
   var linguagensRepository = LinguagensRepository();
   var niveis = [];
   var linguagens = [];
-  var linguagensSelecionadas = [];
+  List<String> linguagensSelecionadas = [];
   var nivelSelecionado = "";
   double salarioEscolhido = 0;
   int tempoExperiencia = 0;
+  late SharedPreferences storage;
+  final String CHAVE_DADOS_CADASTRAIS_NOME = "CHAVE_DADOS_CADASTRAIS_NOME";
+  final String CHAVE_DADOS_CADASTRAIS_DATA_NASCIMENTO =
+      "CHAVE_DADOS_CADASTRAIS_DATA_NASCIMENTO";
+  final String CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA =
+      "CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA";
+  final String CHAVE_DADOS_CADASTRAIS_LINGUAGENS =
+      "CHAVE_DADOS_CADASTRAIS_LINGUAGENS";
+  final String CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA =
+      "CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA";
+  final String CHAVE_DADOS_CADASTRAIS_SALARIO =
+      "CHAVE_DADOS_CADASTRAIS_SALARIO";
 
   bool salvando = false;
 
@@ -30,14 +43,28 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
     niveis = nivelRepository.retornaNiveis();
     linguagens = linguagensRepository.retornaLinguagens();
     super.initState();
+    carregarDados();
+  }
+
+  carregarDados() async {
+    storage = await SharedPreferences.getInstance();
+    setState(() {
+      nomeController.text = storage.getString(CHAVE_DADOS_CADASTRAIS_NOME) ?? "";
+      dataNacimentoController.text = storage.getString(CHAVE_DADOS_CADASTRAIS_DATA_NASCIMENTO) ?? "";
+      dataNascimento = DateTime.parse(dataNacimentoController.text);
+      nivelSelecionado = storage.getString(CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA) ?? "";
+      linguagensSelecionadas = storage.getStringList(CHAVE_DADOS_CADASTRAIS_LINGUAGENS) ?? [];
+      tempoExperiencia = storage.getInt(CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA) ?? 0;
+      salarioEscolhido = storage.getDouble(CHAVE_DADOS_CADASTRAIS_SALARIO) ?? 0.0;
+    });
   }
 
   List<DropdownMenuItem<int>> returnItens(int quantidadeMaxima) {
     var itens = <DropdownMenuItem<int>>[];
     for (var i = 0; i <= quantidadeMaxima; i++) {
       itens.add(DropdownMenuItem(
-        child: Text(i.toString()),
         value: i,
+        child: Text(i.toString()),
       ));
     }
     return itens;
@@ -82,7 +109,6 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                               value: nivel.toString(),
                               groupValue: nivelSelecionado,
                               onChanged: (value) {
-                                print(value);
                                 setState(() {
                                   nivelSelecionado = value.toString();
                                 });
@@ -131,7 +157,8 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                         });
                       }),
                   TextButton(
-                    onPressed: () {
+
+                    onPressed: () async{
                       setState(() {
                         salvando = false;
                       });
@@ -172,6 +199,13 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                         return;
                       }
 
+                      await storage.setString(CHAVE_DADOS_CADASTRAIS_NOME, nomeController.text);
+                      await storage.setString(CHAVE_DADOS_CADASTRAIS_DATA_NASCIMENTO, dataNacimentoController.text);
+                      await storage.setString(CHAVE_DADOS_CADASTRAIS_NIVEL_EXPERIENCIA, nivelSelecionado);
+                      await storage.setStringList(CHAVE_DADOS_CADASTRAIS_LINGUAGENS, linguagensSelecionadas);
+                      await storage.setInt(CHAVE_DADOS_CADASTRAIS_TEMPO_EXPERIENCIA, tempoExperiencia);
+                      await storage.setDouble(CHAVE_DADOS_CADASTRAIS_SALARIO, salarioEscolhido);
+
                       setState(() {
                         salvando = true;
                       });
@@ -185,7 +219,7 @@ class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
                         Navigator.pop(context);
                       });
                     },
-                    child: Text("Salvar"),
+                    child: const Text("Salvar"),
                   ),
                 ],
               ),
