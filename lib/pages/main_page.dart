@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_specialist/pages/teste_http.dart';
 import '/pages/card_page.dart';
 import '/pages/tarefa_page.dart';
 
@@ -36,6 +37,7 @@ class _MainPageState extends State<MainPage> {
                   });
                 },
                 children: const [
+                  TesteHttpPage(),
                   CardPage(),
                   ImageAssetsPage(),
                   ListViewPage(),
@@ -51,6 +53,8 @@ class _MainPageState extends State<MainPage> {
                 },
                 currentIndex: posicaoPagina,
                 items: const [
+                  BottomNavigationBarItem(
+                      label: "http", icon: Icon(Icons.get_app)),
                   BottomNavigationBarItem(
                       label: "Pag1", icon: Icon(Icons.home)),
                   BottomNavigationBarItem(label: "Pag2", icon: Icon(Icons.add)),
