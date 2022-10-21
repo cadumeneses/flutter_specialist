@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_specialist/model/configuracoes_model.dart';
+import 'package:flutter_specialist/repositories/configuracoes_repository.dart';
 
 class ConfiguracoesHivePage extends StatefulWidget {
   const ConfiguracoesHivePage({super.key});
@@ -9,19 +10,12 @@ class ConfiguracoesHivePage extends StatefulWidget {
 }
 
 class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
-  late SharedPreferences storage;
+  late ConfiguracoesRepository configuracoesRepository;
+
+  var configuracoesModel = ConfiguracoesModel.vazio();
 
   TextEditingController nomeUsuarioController = TextEditingController();
   TextEditingController alturaController = TextEditingController();
-  String? nomeUsuario;
-  double? altura;
-  bool receberNotificacao = false;
-  bool temaDark = false;
-
-  final chaveNome = "chave_nome";
-  final chaveAltura = "chave_altura";
-  final chaveNotificacoes = "chave_Notificacoes";
-  final chaveTema = "chave_Tema";
 
   @override
   void initState() {
@@ -30,13 +24,11 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
   }
 
   carregarDados() async {
-    storage = await SharedPreferences.getInstance();
-    setState(() {
-      nomeUsuarioController.text = storage.getString(chaveNome) ?? "";
-      alturaController.text = (storage.getDouble(chaveAltura) ?? 0).toString();
-      receberNotificacao = storage.getBool(chaveNotificacoes) ?? false;
-      temaDark = storage.getBool(chaveTema) ?? false;
-    });
+    configuracoesRepository = await ConfiguracoesRepository.carregar();
+    configuracoesModel = configuracoesRepository.obterDados();
+    nomeUsuarioController.text = configuracoesModel.nomeUsuario;
+    alturaController.text = configuracoesModel.altura.toString();
+    setState(() {});
   }
 
   @override
@@ -79,19 +71,19 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
               ),
               SwitchListTile(
                 title: const Text('Notificações'),
-                value: receberNotificacao,
+                value: configuracoesModel.receberNotificacoes,
                 onChanged: (bool value) {
                   setState(() {
-                    receberNotificacao = value;
+                    configuracoesModel.receberNotificacoes = value;
                   });
                 },
               ),
               SwitchListTile(
                 title: const Text('Tema escuro'),
-                value: temaDark,
+                value: configuracoesModel.temaEscuro,
                 onChanged: (bool value) {
                   setState(() {
-                    temaDark = value;
+                    configuracoesModel.temaEscuro = value;
                   });
                 },
               ),
@@ -99,23 +91,29 @@ class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
                 onPressed: () async {
                   FocusManager.instance.primaryFocus?.unfocus();
                   try {
-                    await storage.setDouble(chaveAltura,
-                        double.tryParse(alturaController.text) ?? 0);
+                    configuracoesModel.altura =
+                        double.parse(alturaController.text);
                   } catch (e) {
-                    showDialog(context: context, builder: (_){
-                      return AlertDialog(
-                        title: const Text("Meu app"),
-                        content: const Text("Informe uma altura válida!"),
-                        actions: [
-                          TextButton(onPressed: (){Navigator.pop(context);}, child: const Text('Voltar'))
-                        ],
-                      );
-                    });
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return AlertDialog(
+                            title: const Text("Meu app"),
+                            content: const Text("Informe uma altura válida!"),
+                            actions: [
+                              TextButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: const Text('Voltar'))
+                            ],
+                          );
+                        });
+                    return;
                   }
-                  await storage.setString(
-                      chaveNome, nomeUsuarioController.text);
-                  await storage.setBool(chaveNotificacoes, receberNotificacao);
-                  await storage.setBool(chaveTema, temaDark);
+                  configuracoesModel.nomeUsuario = nomeUsuarioController.text;
+                  debugPrint(configuracoesModel.toString());
+                  configuracoesRepository.salvar(configuracoesModel);
                   Navigator.pop(context);
                 },
                 child: const Text('Salvar'),
