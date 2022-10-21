@@ -5,7 +5,7 @@ import '../../pages/configuracoes/configuracoes_hive_page.dart';
 import '../../pages/numerosaleatorios/numeros_aleatorios_hive_page.dart';
 import '/pages/login_page.dart';
 
-import '../../pages/dados_cadastrais.dart';
+import '../../pages/dados_cadastrais/dados_cadastrais_hive_page.dart';
 
 class CustonDrawer extends StatelessWidget {
   const CustonDrawer({Key? key}) : super(key: key);
@@ -72,7 +72,7 @@ class CustonDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => const DadosCadastraisPage()));
+                      builder: (context) => const DadosCadastraisHivePage()));
             },
           ),
           const Divider(),

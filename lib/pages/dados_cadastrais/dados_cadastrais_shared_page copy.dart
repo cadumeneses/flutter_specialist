@@ -4,14 +4,14 @@ import '/repositories/linguagens_repository.dart';
 import '/repositories/nivel_repository.dart';
 import '/shared/widgets/text_label.dart';
 
-class DadosCadastraisPage extends StatefulWidget {
-  const DadosCadastraisPage({Key? key}) : super(key: key);
+class DadosCadastraisSharedPage extends StatefulWidget {
+  const DadosCadastraisSharedPage({Key? key}) : super(key: key);
 
   @override
-  State<DadosCadastraisPage> createState() => _DadosCadastraisPageState();
+  State<DadosCadastraisSharedPage> createState() => _DadosCadastraisSharedPageState();
 }
 
-class _DadosCadastraisPageState extends State<DadosCadastraisPage> {
+class _DadosCadastraisSharedPageState extends State<DadosCadastraisSharedPage> {
   var nomeController = TextEditingController(text: "");
   var dataNacimentoController = TextEditingController(text: "");
   DateTime? dataNascimento;
