@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_specialist/pages/configuracoes_page.dart';
-import 'package:flutter_specialist/pages/numeros_aleatorios_page.dart';
+import 'package:flutter_specialist/pages/configuracoes/configuracoes_shared_page.dart';
+import 'package:flutter_specialist/pages/numerosaleatorios/numeros_aleatorios_shared_page.dart';
+import '../../pages/configuracoes/configuracoes_hive_page.dart';
+import '../../pages/numerosaleatorios/numeros_aleatorios_hive_page.dart';
 import '/pages/login_page.dart';
 
 import '../../pages/dados_cadastrais.dart';
@@ -144,7 +146,7 @@ class CustonDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const ConfiguracoesPage()));
+                      builder: (ctx) => const ConfiguracoesHivePage()));
             },
           ),
           const Divider(),
@@ -170,7 +172,7 @@ class CustonDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (ctx) => const NumerosAleatoriosPage()));
+                      builder: (ctx) => const NumerosAleatoriosHivePage()));
             },
           ),
           const Divider(),

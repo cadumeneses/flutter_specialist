@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ConfiguracoesPage extends StatefulWidget {
-  const ConfiguracoesPage({super.key});
+class ConfiguracoesHivePage extends StatefulWidget {
+  const ConfiguracoesHivePage({super.key});
 
   @override
-  State<ConfiguracoesPage> createState() => _ConfiguracoesPageState();
+  State<ConfiguracoesHivePage> createState() => _ConfiguracoesHivePageState();
 }
 
-class _ConfiguracoesPageState extends State<ConfiguracoesPage> {
+class _ConfiguracoesHivePageState extends State<ConfiguracoesHivePage> {
   late SharedPreferences storage;
 
   TextEditingController nomeUsuarioController = TextEditingController();
