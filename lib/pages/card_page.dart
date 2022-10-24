@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '/pages/card_detail.dart';
-import '/repositories/card_detail_repository.dart';
+import '../repositories/card_detail_repository.dart';
 
 import '../model/card_detail.dart';
 

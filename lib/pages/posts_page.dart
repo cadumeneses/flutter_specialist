@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_specialist/model/post_model.dart';
 import 'package:flutter_specialist/pages/comentarios_page.dart';
-import 'package:flutter_specialist/repositories/post_repository.dart';
+import 'package:flutter_specialist/repositories/impl/post_repository.dart';
+import 'package:flutter_specialist/repositories/impl/posts_dio_repository.dart';
+import 'package:flutter_specialist/repositories/posts_interface_repository.dart';
 
 class PostsPage extends StatefulWidget {
   const PostsPage({super.key});
@@ -11,7 +13,7 @@ class PostsPage extends StatefulWidget {
 }
 
 class _PostsPageState extends State<PostsPage> {
-  var postsRepository = PostRepository();
+  PostsInterfaceRepository postsRepository = PostsDioRepository();
   var posts = <PostsModel>[];
 
   @override
