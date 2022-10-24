@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_specialist/pages/teste_http.dart';
+import 'package:flutter_specialist/pages/consulta_cep_page.dart';
 import '/pages/card_page.dart';
 import '/pages/tarefa_page.dart';
 
@@ -37,7 +37,7 @@ class _MainPageState extends State<MainPage> {
                   });
                 },
                 children: const [
-                  TesteHttpPage(),
+                  ConsultaCepPage(),
                   CardPage(),
                   ImageAssetsPage(),
                   ListViewPage(),
