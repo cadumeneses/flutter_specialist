@@ -3,6 +3,7 @@ import 'package:flutter_specialist/pages/characters/characters_page.dart';
 import 'package:flutter_specialist/pages/configuracoes/configuracoes_shared_page.dart';
 import 'package:flutter_specialist/pages/numerosaleatorios/numeros_aleatorios_shared_page.dart';
 import 'package:flutter_specialist/pages/posts_page.dart';
+import 'package:flutter_specialist/pages/task_page.dart';
 import 'package:flutter_specialist/repositories/marvel/characters_repository.dart';
 import '../../pages/configuracoes/configuracoes_hive_page.dart';
 import '../../pages/numerosaleatorios/numeros_aleatorios_hive_page.dart';
@@ -246,7 +247,7 @@ class CustonDrawer extends StatelessWidget {
             onTap: () {
               Navigator.pop(context);
               Navigator.push(context,
-                  MaterialPageRoute(builder: (ctx) => const CharactersPage()));
+                  MaterialPageRoute(builder: (ctx) => const TaskPage()));
             },
           ),
           const Divider(),
