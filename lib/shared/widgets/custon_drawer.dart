@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_specialist/pages/characters/characters_page.dart';
 import 'package:flutter_specialist/pages/configuracoes/configuracoes_shared_page.dart';
 import 'package:flutter_specialist/pages/numerosaleatorios/numeros_aleatorios_shared_page.dart';
 import 'package:flutter_specialist/pages/posts_page.dart';
+import 'package:flutter_specialist/repositories/marvel/characters_repository.dart';
 import '../../pages/configuracoes/configuracoes_hive_page.dart';
 import '../../pages/numerosaleatorios/numeros_aleatorios_hive_page.dart';
 import '/pages/login_page.dart';
@@ -196,10 +198,32 @@ class CustonDrawer extends StatelessWidget {
                 )),
             onTap: () {
               Navigator.pop(context);
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (ctx) => const PostsPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => const PostsPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                width: double.infinity,
+                child: Row(
+                  children: const [
+                    Icon(Icons.person),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Heróis"),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => const CharactersPage()));
             },
           ),
           const Divider(),
