@@ -10,6 +10,7 @@ class CharactersPage extends StatefulWidget {
 }
 
 class _CharactersPageState extends State<CharactersPage> {
+  ScrollController _scrollController = ScrollController();
   final CharactersRepository charactersRepository = CharactersRepository();
   CharactersModel characters = CharactersModel();
   int offset = 0;
@@ -17,11 +18,20 @@ class _CharactersPageState extends State<CharactersPage> {
 
   @override
   void initState() {
+    _scrollController.addListener(() {
+      var posicaoPaginar = _scrollController.position.maxScrollExtent * 0.7;
+      if (_scrollController.position.pixels > posicaoPaginar) {
+        carregarDados();
+      }
+    });
     super.initState();
     carregarDados();
   }
 
   carregarDados() async {
+    if (carregando) {
+      return;
+    }
     if (characters.data == null || characters.data!.results == null) {
       characters = await charactersRepository.getCharacters(offset);
     } else {
@@ -31,7 +41,7 @@ class _CharactersPageState extends State<CharactersPage> {
       offset = offset + characters.data!.count!;
       var list = await charactersRepository.getCharacters(offset);
       characters.data!.results!.addAll(list.data!.results!);
-      carregando= false;
+      carregando = false;
     }
     setState(() {});
   }
@@ -63,6 +73,7 @@ class _CharactersPageState extends State<CharactersPage> {
           children: [
             Expanded(
               child: ListView.builder(
+                controller: _scrollController,
                 itemCount: (characters.data == null ||
                         characters.data!.results == null)
                     ? 0
@@ -104,12 +115,14 @@ class _CharactersPageState extends State<CharactersPage> {
                 },
               ),
             ),
-            !carregando ?ElevatedButton(
-              onPressed: () {
-                carregarDados();
-              },
-              child: const Text('Mais'),
-            ) : const CircularProgressIndicator()
+            !carregando
+                ? ElevatedButton(
+                    onPressed: () {
+                      carregarDados();
+                    },
+                    child: const Text('Mais'),
+                  )
+                : const CircularProgressIndicator()
           ],
         ),
       ),

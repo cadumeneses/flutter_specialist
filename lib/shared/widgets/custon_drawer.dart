@@ -16,8 +16,7 @@ class CustonDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: ListView(
         children: [
           InkWell(
             onTap: () {
@@ -218,6 +217,30 @@ class CustonDrawer extends StatelessWidget {
                       width: 5,
                     ),
                     Text("Heróis"),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => const CharactersPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                width: double.infinity,
+                child: Row(
+                  children: const [
+                    Icon(Icons.list),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Tarefas HTTP"),
                   ],
                 )),
             onTap: () {

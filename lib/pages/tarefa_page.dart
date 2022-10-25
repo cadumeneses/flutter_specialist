@@ -11,7 +11,7 @@ class TarefaPage extends StatefulWidget {
 
 class _TarefaPageState extends State<TarefaPage> {
   var tarefaRepository = TarefaRepository();
-  var _tarefas = const <Tarefa>[];
+  var _tarefas = const <TarefaModel>[];
   var descricaoContoller = TextEditingController();
   var apenasNaoConcluidos = false;
 
@@ -55,7 +55,7 @@ class _TarefaPageState extends State<TarefaPage> {
                       TextButton(
                           onPressed: () async {
                             await tarefaRepository.adicionat(
-                                Tarefa(descricaoContoller.text, false));
+                                TarefaModel(descricaoContoller.text, false));
                             Navigator.pop(context);
                             setState(() {});
                           },

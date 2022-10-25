@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 
-class Tarefa {
+class TarefaModel {
   final String _id = UniqueKey().toString();
   String _descricao = "";
   bool _concluido = false;
 
-  Tarefa(this._descricao, this._concluido);
+  TarefaModel(this._descricao, this._concluido);
 
   String get id => _id;
 

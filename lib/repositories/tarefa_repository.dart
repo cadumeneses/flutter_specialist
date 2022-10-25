@@ -1,9 +1,9 @@
 import '/model/tarefa.dart';
 
 class TarefaRepository {
-  final List<Tarefa> _tarefas = [];
+  final List<TarefaModel> _tarefas = [];
 
-  Future<void> adicionat(Tarefa tarefa) async {
+  Future<void> adicionat(TarefaModel tarefa) async {
     await Future.delayed(const Duration(milliseconds: 100));
     _tarefas.add(tarefa);
   }
@@ -18,12 +18,12 @@ class TarefaRepository {
     _tarefas.remove(_tarefas.where((tarefa) => tarefa.id == id).first);
   }
 
-  Future<List<Tarefa>> listar() async {
+  Future<List<TarefaModel>> listar() async {
     await Future.delayed(const Duration(milliseconds: 100));
     return _tarefas;
   }
 
-  Future<List<Tarefa>> listarNaoConcluidas() async {
+  Future<List<TarefaModel>> listarNaoConcluidas() async {
     await Future.delayed(const Duration(milliseconds: 100));
     return _tarefas.where((tarefa) => !tarefa.concluido).toList();
   }
