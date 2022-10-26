@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_specialist/pages/auto_size_page.dart';
 import 'package:flutter_specialist/pages/characters/characters_page.dart';
 import 'package:flutter_specialist/pages/configuracoes/configuracoes_shared_page.dart';
 import 'package:flutter_specialist/pages/numerosaleatorios/numeros_aleatorios_shared_page.dart';
 import 'package:flutter_specialist/pages/posts_page.dart';
 import 'package:flutter_specialist/pages/task_page.dart';
 import 'package:flutter_specialist/repositories/marvel/characters_repository.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../pages/configuracoes/configuracoes_hive_page.dart';
 import '../../pages/numerosaleatorios/numeros_aleatorios_hive_page.dart';
 import '/pages/login_page.dart';
@@ -63,7 +65,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.person),
+                    FaIcon(FontAwesomeIcons.database),
                     SizedBox(
                       width: 5,
                     ),
@@ -89,7 +91,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.info),
+                    FaIcon(FontAwesomeIcons.file),
                     SizedBox(
                       width: 5,
                     ),
@@ -137,7 +139,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.album),
+                    FaIcon(FontAwesomeIcons.gears),
                     SizedBox(
                       width: 5,
                     ),
@@ -163,7 +165,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.numbers),
+                    FaIcon(FontAwesomeIcons.hashtag),
                     SizedBox(
                       width: 5,
                     ),
@@ -189,7 +191,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.numbers),
+                    FaIcon(FontAwesomeIcons.mailchimp),
                     SizedBox(
                       width: 5,
                     ),
@@ -213,7 +215,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.person),
+                    FaIcon(FontAwesomeIcons.mask),
                     SizedBox(
                       width: 5,
                     ),
@@ -237,7 +239,7 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.list),
+                    FaIcon(FontAwesomeIcons.listCheck),
                     SizedBox(
                       width: 5,
                     ),
@@ -261,7 +263,31 @@ class CustonDrawer extends StatelessWidget {
                 width: double.infinity,
                 child: Row(
                   children: const [
-                    Icon(Icons.exit_to_app),
+                    FaIcon(FontAwesomeIcons.solidFileZipper),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Auto size"),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => const AutoSizePage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),
+          InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                width: double.infinity,
+                child: Row(
+                  children: const [
+                    FaIcon(FontAwesomeIcons.personThroughWindow),
                     SizedBox(
                       width: 5,
                     ),
