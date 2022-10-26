@@ -10,10 +10,12 @@ class TaskPage extends StatefulWidget {
 }
 
 class _TaskPageState extends State<TaskPage> {
-  TarefasBack4AppRepository tarefasBack4AppRepository = TarefasBack4AppRepository();
+  TarefasBack4AppRepository tarefasBack4AppRepository =
+      TarefasBack4AppRepository();
   var _tarefasBack4App = TarefasBack4AppModel([]);
   var descricaoContoller = TextEditingController();
   var apenasNaoConcluidos = false;
+  var loading = false;
 
   @override
   void initState() {
@@ -22,14 +24,20 @@ class _TaskPageState extends State<TaskPage> {
   }
 
   void obterTarefas() async {
-    _tarefasBack4App = await tarefasBack4AppRepository.getTasks();
-    setState(() {});
+    setState(() {
+      loading = true;
+    });
+    _tarefasBack4App =
+        await tarefasBack4AppRepository.getTasks(apenasNaoConcluidos);
+    setState(() {
+      loading = false;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tarefas')),
+        appBar: AppBar(title: const Text('Tarefas')),
         floatingActionButton: FloatingActionButton(
           child: const Icon(Icons.add),
           onPressed: () {
@@ -65,48 +73,51 @@ class _TaskPageState extends State<TaskPage> {
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             children: [
-              // Container(
-              //   margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       const Text(
-              //         "Apenas não concluídos",
-              //         style: TextStyle(fontSize: 18),
-              //       ),
-              //       Switch(
-              //           value: apenasNaoConcluidos,
-              //           onChanged: (bool value) {
-              //             apenasNaoConcluidos = value;
-              //             obterTarefas();
-              //           })
-              //     ],
-              //   ),
-              // ),
-              Expanded(
-                child: ListView.builder(
-                    itemCount: _tarefasBack4App.tarefas.length,
-                    itemBuilder: (BuildContext bc, int index) {
-                      var tarefa = _tarefasBack4App.tarefas[index];
-                      return Dismissible(
-                        onDismissed: (DismissDirection dismissDirection) async {
-                          //await tarefaRepository.remove(tarefa.id);
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Apenas não concluídos",
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    Switch(
+                        value: apenasNaoConcluidos,
+                        onChanged: (bool value) {
+                          apenasNaoConcluidos = value;
                           obterTarefas();
-                        },
-                        key: Key(tarefa.description),
-                        child: ListTile(
-                          title: Text(tarefa.description),
-                          trailing: Switch(
-                            onChanged: (bool value) async {
-                              //await tarefasBack4AppRepository.alterar(tarefa.id, value);
-                              obterTarefas();
-                            },
-                            value: tarefa.done,
-                          ),
-                        ),
-                      );
-                    }),
+                        })
+                  ],
+                ),
               ),
+              loading
+                  ? const CircularProgressIndicator()
+                  : Expanded(
+                      child: ListView.builder(
+                          itemCount: _tarefasBack4App.tarefas.length,
+                          itemBuilder: (BuildContext bc, int index) {
+                            var tarefa = _tarefasBack4App.tarefas[index];
+                            return Dismissible(
+                              onDismissed:
+                                  (DismissDirection dismissDirection) async {
+                                //await tarefaRepository.remove(tarefa.id);
+                                obterTarefas();
+                              },
+                              key: Key(tarefa.description),
+                              child: ListTile(
+                                title: Text(tarefa.description),
+                                trailing: Switch(
+                                  onChanged: (bool value) async {
+                                    //await tarefasBack4AppRepository.alterar(tarefa.id, value);
+                                    obterTarefas();
+                                  },
+                                  value: tarefa.done,
+                                ),
+                              ),
+                            );
+                          }),
+                    ),
             ],
           ),
         ));
