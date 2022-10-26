@@ -1,13 +1,13 @@
 class TarefasBack4AppModel {
-  List<Tarefa> tarefas = [];
+  List<TarefaBack4AppModel> tarefas = [];
 
   TarefasBack4AppModel(this.tarefas);
 
   TarefasBack4AppModel.fromJson(Map<String, dynamic> json) {
     if (json['results'] != null) {
-      tarefas = <Tarefa>[];
+      tarefas = <TarefaBack4AppModel>[];
       json['results'].forEach((v) {
-        tarefas.add(Tarefa.fromJson(v));
+        tarefas.add(TarefaBack4AppModel.fromJson(v));
       });
     }
   }
@@ -19,21 +19,19 @@ class TarefasBack4AppModel {
   }
 }
 
-class Tarefa {
+class TarefaBack4AppModel {
   String objectId = "";
   String description = "";
   bool done = false;
   String createdAt = "";
   String updatedAt = "";
 
-  Tarefa(
-      this.objectId,
-      this.description,
-      this.done,
-      this.createdAt,
+  TarefaBack4AppModel(this.objectId, this.description, this.done, this.createdAt,
       this.updatedAt);
 
-  Tarefa.fromJson(Map<String, dynamic> json) {
+  TarefaBack4AppModel.criar(this.description, this.done);
+
+  TarefaBack4AppModel.fromJson(Map<String, dynamic> json) {
     objectId = json['objectId'];
     description = json['description'];
     done = json['done'];
@@ -48,6 +46,13 @@ class Tarefa {
     data['done'] = done;
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
+    return data;
+  }
+
+  Map<String, dynamic> toJsonEndPoint() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['description'] = description;
+    data['done'] = done;
     return data;
   }
 }

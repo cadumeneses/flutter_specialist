@@ -58,9 +58,10 @@ class _TaskPageState extends State<TaskPage> {
                           child: const Text("Cancelar")),
                       TextButton(
                           onPressed: () async {
-                            // await tarefaRepository.adicionat(
-                            //     TarefaModel(descricaoContoller.text, false));
                             Navigator.pop(context);
+                            await tarefasBack4AppRepository.criarTask(
+                                TarefaBack4AppModel.criar(descricaoContoller.text, false));
+                            obterTarefas();
                             setState(() {});
                           },
                           child: const Text("Salvar"))
@@ -101,7 +102,7 @@ class _TaskPageState extends State<TaskPage> {
                             return Dismissible(
                               onDismissed:
                                   (DismissDirection dismissDirection) async {
-                                //await tarefaRepository.remove(tarefa.id);
+                                await tarefasBack4AppRepository.remover(tarefa.objectId);
                                 obterTarefas();
                               },
                               key: Key(tarefa.description),
@@ -109,7 +110,8 @@ class _TaskPageState extends State<TaskPage> {
                                 title: Text(tarefa.description),
                                 trailing: Switch(
                                   onChanged: (bool value) async {
-                                    //await tarefasBack4AppRepository.alterar(tarefa.id, value);
+                                    tarefa.done = value;
+                                    await tarefasBack4AppRepository.atualizarTask(tarefa);
                                     obterTarefas();
                                   },
                                   value: tarefa.done,
