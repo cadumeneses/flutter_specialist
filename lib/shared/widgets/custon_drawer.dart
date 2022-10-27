@@ -5,6 +5,7 @@ import 'package:flutter_specialist/pages/characters/characters_page.dart';
 import 'package:flutter_specialist/pages/configuracoes/configuracoes_shared_page.dart';
 import 'package:flutter_specialist/pages/numerosaleatorios/numeros_aleatorios_shared_page.dart';
 import 'package:flutter_specialist/pages/posts_page.dart';
+import 'package:flutter_specialist/pages/qr_code_page.dart';
 import 'package:flutter_specialist/pages/task_page.dart';
 import 'package:flutter_specialist/repositories/marvel/characters_repository.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -298,6 +299,29 @@ class CustonDrawer extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(context,
                   MaterialPageRoute(builder: (ctx) => const BatteryPage()));
+            },
+          ),
+          const Divider(),
+          const SizedBox(
+            height: 10,
+          ),InkWell(
+            child: Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                width: double.infinity,
+                child: Row(
+                  children: const [
+                    FaIcon(FontAwesomeIcons.qrcode),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text("Qr code"),
+                  ],
+                )),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (ctx) => const QrCodePage()));
             },
           ),
           const Divider(),
